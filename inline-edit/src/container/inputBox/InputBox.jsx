@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container } from "./InputBox.styles.jsx"
 
 const InputBox = () => {
   const [keyword, setKeyword] = useState("");
@@ -8,9 +9,9 @@ const InputBox = () => {
   ] = useState(true);
 
   return (
-    <div
+    <Container
       onClick={() => {
-        setShowInputField(false);
+        setShowInputField(true);
       }}
     >
       {showInputField ? (
@@ -23,7 +24,7 @@ const InputBox = () => {
           }}
         />
       ) : null}
-    </div>
+    </Container>
   );
 };
 
