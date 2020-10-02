@@ -1,7 +1,12 @@
 import React from "react";
+import InputBox from "./container/inputBox/InputBox";
 
-function App() {
-  return <div className="App"></div>;
-}
+const App = () => {
+  return (
+    <div className="App">
+      <InputBox />
+    </div>
+  );
+};
 
 export default App;
