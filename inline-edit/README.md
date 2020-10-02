@@ -1,21 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Coyote-Test
+This application follows a Users journey into entering a word into a input field which results in a Mock Promise being triggered. 
 
-## Descriptions
-Create component to edit values inline. This component should appear as a normal text on the page, editable when clicked and displaying result of the action triggered by edit.
+## Validation
+-   Successful Promise: A user enters less than 10 characters into the input field. 
+-   Unsuccesful Promise: A user enters more than 10 characters in the input field. 
 
-**NOTE:**
-For the purpose of this test, feel free to use any kind of mock for the submission action. Simple promise would do!
+### Tech Stack 
+UI: React.js
+Styling: styled-components 
 
-### Wireframe
+
+### To set Up Project
+Clone Repo: git clone git@github.com:SHUBV92/coyote.git
+CD into directory named: coyote-ui-interview
+Run: npm start 
+
+### User Journey Wireframe
 
 ![Wireframe/Algorithm](InlineEdit_Wireframe_Algorithm.jpg)
-
-## Requirements
-* Static text displays current value
-* Clicking on static text will make it editable
-* Clicking out of the field or pressing Enter will confirm the change
-* Status indicator will display beside the text to notify user
-    * Loading - change has been submitted
-    * Success - change accepted
-    * Error - change refused
-* On error a message will display under the text    

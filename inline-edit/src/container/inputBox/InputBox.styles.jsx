@@ -14,6 +14,6 @@ export const Container = styled.div`
   }
 
   .faIcon {
-    padding-left: 5%;
+    padding-left: 1%;
   }
 `;
