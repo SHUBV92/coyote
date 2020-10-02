@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Container } from "./InputBox.styles.jsx"
+import { Container } from "./InputBox.styles.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faTimes,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 
 const InputBox = () => {
   const [keyword, setKeyword] = useState("");
@@ -8,6 +14,7 @@ const InputBox = () => {
     setShowInputField,
   ] = useState(true);
   const [apiResult, setApiResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validatedApi = (value) => {
     return new Promise((resolve, reject) => {
@@ -23,21 +30,31 @@ const InputBox = () => {
   };
 
   const onSubmit = async (event) => {
-   event.preventDefault()
-    // setLoading(true);
+    // event.preventDefault();
+    setLoading(true);
 
     try {
       const apiResponse = await validatedApi();
       if (apiResponse === "Success") {
-        //   setLoading(false);
+        setLoading(false);
         setApiResult(true);
         setShowInputField(false);
       }
     } catch (err) {
-    //   setLoading(false);
+      //   setLoading(false);
       setApiResult(false);
       setShowInputField(false);
     }
+  };
+
+  const icon = (icon, spin) => {
+    return (
+      <FontAwesomeIcon
+        className="faIcon"
+        icon={icon}
+        spin={spin}
+      />
+    );
   };
 
   return (
@@ -54,8 +71,22 @@ const InputBox = () => {
           onChange={(event) => {
             setKeyword(event.target.value);
           }}
+          onBlur={()=>{onSubmit()}}
         />
       ) : null}
+      {loading ? (
+        icon(faSpinner, true)
+      ) : apiResult ? (
+        <p>
+          {keyword}
+          {icon(faCheck, false)}
+        </p>
+      ) : (
+        <p>
+          Something went wrong
+          {icon(faTimes, false)}
+        </p>
+      )}
     </Container>
   );
 };
