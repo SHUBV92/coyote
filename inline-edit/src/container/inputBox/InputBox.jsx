@@ -9,18 +9,20 @@ import {
 
 const InputBox = () => {
   const [keyword, setKeyword] = useState("");
+  const [apiResult, setApiResult] = useState("");
+  const [loading, setLoading] = useState(false);
   const [
     showInputField,
     setShowInputField,
   ] = useState(true);
-  const [apiResult, setApiResult] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const validatedApi = (value) => {
+    setLoading(true);
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (keyword.length < 10) {
-          resolve(value);
+          resolve("Success");
         }
         if (keyword.length > 10) {
           reject("Error");
@@ -30,9 +32,6 @@ const InputBox = () => {
   };
 
   const onSubmit = async (event) => {
-    // event.preventDefault();
-    setLoading(true);
-
     try {
       const apiResponse = await validatedApi();
       if (apiResponse === "Success") {
@@ -41,7 +40,7 @@ const InputBox = () => {
         setShowInputField(false);
       }
     } catch (err) {
-      //   setLoading(false);
+      setLoading(false);
       setApiResult(false);
       setShowInputField(false);
     }
@@ -71,7 +70,9 @@ const InputBox = () => {
           onChange={(event) => {
             setKeyword(event.target.value);
           }}
-          onBlur={()=>{onSubmit()}}
+          onBlur={() => {
+            onSubmit();
+          }}
         />
       ) : null}
       {loading ? (
