@@ -9,7 +9,9 @@ import {
 
 const InputBox = () => {
   const [keyword, setKeyword] = useState("");
-  const [apiResult, setApiResult] = useState("");
+  const [apiResult, setApiResult] = useState(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const [
     showInputField,
@@ -17,8 +19,6 @@ const InputBox = () => {
   ] = useState(true);
 
   const validatedApi = (value) => {
-    setLoading(true);
-
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (keyword.length < 10) {
@@ -32,6 +32,9 @@ const InputBox = () => {
   };
 
   const onSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
     try {
       const apiResponse = await validatedApi();
       if (apiResponse === "Success") {
@@ -62,32 +65,37 @@ const InputBox = () => {
         setShowInputField(true);
       }}
     >
-      {showInputField ? (
-        <input
-          type="text"
-          placeholder="Hello World"
-          value={keyword}
-          onChange={(event) => {
-            setKeyword(event.target.value);
-          }}
-          onBlur={() => {
-            onSubmit();
-          }}
-        />
-      ) : null}
-      {loading ? (
-        icon(faSpinner, true)
-      ) : apiResult ? (
-        <p>
-          {keyword}
-          {icon(faCheck, false)}
-        </p>
-      ) : (
-        <p>
-          Something went wrong
-          {icon(faTimes, false)}
-        </p>
-      )}
+      <form onSubmit={(event) => onSubmit(event)}>
+        {showInputField ? (
+          <input
+            type="text"
+            placeholder="Enter keyword here ..."
+            value={keyword}
+            onChange={(event) => {
+              setKeyword(event.target.value);
+            }}
+            onBlur={(event) => {
+              onSubmit(event);
+            }}
+          />
+        ) : null}
+
+        {loading ? (
+          icon(faSpinner, true)
+        ) : apiResult &&
+          keyword.length != 0 &&
+          !showInputField ? (
+          <p>
+            {keyword}
+            {icon(faCheck, false)}
+          </p>
+        ) : !showInputField ? (
+          <p>
+            Something went wrong
+            {icon(faTimes, false)}
+          </p>
+        ) : null}
+      </form>
     </Container>
   );
 };
